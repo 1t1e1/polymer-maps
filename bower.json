@@ -1,9 +1,8 @@
 {
-  "name": "PolymerMapsCodelab",
+  "name": "polymer-maps",
   "description": "",
   "homepage": "",
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "",
   "private": true,
   "dependencies": {
