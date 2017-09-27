@@ -10,12 +10,16 @@
 
   <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
-  <!-- HTML Imports go here. Format: <link rel="import" href=""> -->
+  <link rel="import" href="bower_components/google-map/google-map.html">
 
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <h1>Replace this with Polymer Elements!</h1>
+  <google-map latitude="39.9547359" longitude="-75.1685715"
+    api-key="YOUR_KEY" zoom="13" disable-default-ui>
+    <google-map-marker latitude="39.9547359" longitude="-75.1685715"
+      title="Comcast Center" draggable="true"></google-map-marker>
+  </google-map>
 </body>
 </html>
