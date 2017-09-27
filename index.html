@@ -11,6 +11,7 @@
   <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
   <link rel="import" href="bower_components/google-map/google-map.html">
+  <link rel="import" href="bower_components/google-map/google-map-directions.html">
 
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -21,5 +22,26 @@
     <google-map-marker latitude="39.9547359" longitude="-75.1685715"
       title="Comcast Center" draggable="true"></google-map-marker>
   </google-map>
+  <google-map-directions
+    start-address="Comcast Center"
+    end-address="Citizens Bank Park"
+    api-key="YOUR_KEY"></google-map-directions>
+
+  <script>
+    (function() {
+      var gMap = document.querySelector('google-map');
+      var gMapDir = document.querySelector('google-map-directions');
+      var bindMaps = function() {
+        gMapDir.map = gMap.map;
+      };
+      if (gMap.map) {
+        bindMaps();
+      } else {
+        gMap.addEventListener('api-load', function(e) {
+          bindMaps();
+        });
+      }
+    }());
+  </script>
 </body>
 </html>
