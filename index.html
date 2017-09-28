@@ -18,8 +18,33 @@
   <script type="module" src="node_modules/@polymer/paper-item/paper-icon-item.js"></script>
   <script type="module" src="node_modules/@polymer/paper-input/paper-input.js"></script>
   <script type="module" src="node_modules/@polymer/paper-card/paper-card.js"></script>
+  <script type="module" src="node_modules/@polymer/iron-icons/maps-icons.js"></script>
+  <script type="module" src="node_modules/@polymer/paper-tabs/paper-tabs.js"></script>
 
   <link rel="stylesheet" href="styles.css">
+
+  <custom-style>
+    <style>
+      paper-tabs {
+        --paper-tabs-selection-bar-color: #0D47A1;
+        margin-top: 16px;
+      }
+      paper-tab {
+        --paper-tab-ink: #BBDEFB;
+      }
+
+      /* Other styles that make things more pleasant.
+        These could instead be added in styles.css since they
+        do not use any Polymer styling features. */
+      paper-tab iron-icon {
+        margin-right: 10px;
+      }
+      paper-tab.iron-selected {
+        background: rgb(66, 133, 244);
+        color: white;
+      }
+    </style>
+  </custom-style>
 </head>
 
 <body>
@@ -34,7 +59,8 @@
         map="{{map}}"
         start-address="{{start}}"
         end-address="{{end}}"
-        api-key="YOUR_KEY"></google-map-directions>
+        api-key="YOUR_KEY"
+        travel-mode="[[travelMode]]"></google-map-directions>
       <paper-card elevation="2"> <!-- elevation controls the amount of box shadow -->
         <paper-icon-item>
           <iron-icon icon="search" slot="item-icon"></iron-icon>
@@ -44,6 +70,24 @@
           <iron-icon icon="search" slot="item-icon"></iron-icon>
           <paper-input label="End address" value="{{end}}"></paper-input>
         </paper-icon-item>
+        <paper-tabs selected="{{travelMode}}" attr-for-selected="label">
+          <paper-tab label="DRIVING">
+            <iron-icon icon="maps:directions-car"></iron-icon>
+            <span>DRIVING</span>
+          </paper-tab>
+          <paper-tab label="WALKING">
+            <iron-icon icon="maps:directions-walk"></iron-icon>
+            <span>WALKING</span>
+          </paper-tab>
+          <paper-tab label="BICYCLING">
+            <iron-icon icon="maps:directions-bike"></iron-icon>
+            <span>BICYCLING</span>
+          </paper-tab>
+          <paper-tab label="TRANSIT">
+            <iron-icon icon="maps:directions-transit"></iron-icon>
+            <span>TRANSIT</span>
+          </paper-tab>
+        </paper-tabs>
       </paper-card>
     </template>
   </dom-bind>
