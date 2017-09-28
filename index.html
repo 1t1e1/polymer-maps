@@ -70,7 +70,7 @@
           <iron-icon icon="search" slot="item-icon"></iron-icon>
           <paper-input label="End address" value="{{end}}"></paper-input>
         </paper-icon-item>
-        <paper-tabs selected="{{travelMode}}" attr-for-selected="label">
+        <paper-tabs selected="{{travelMode}}" attr-for-selected="label" fallback-selection="DRIVING">
           <paper-tab label="DRIVING">
             <iron-icon icon="maps:directions-car"></iron-icon>
             <span>DRIVING</span>
