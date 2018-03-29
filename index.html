@@ -150,6 +150,15 @@
 <h2><strong>Run the app</strong></h2>
 <p>If you haven&#39;t already done so, navigate to <a href="http://127.0.0.1:8081/">http://127.0.0.1:8081/</a>. At this point, you should see a map that takes up the entire viewport and has a single marker pin.</p>
 <p><img style="max-width: 624.00px" src="img/bc91a8850a10582c.png"></p>
+
+<aside class="special"><p><strong>Is your map missing?</strong></p>
+  <p>One of the most common mistakes made when first developing with Polymer is adding a Custom Element to your markup and forgetting to include the HTML Import of that Custom Element. If you do that, your Custom Element's definition will not be loaded and will therefore not render as you expect. It can be difficult to realize because it fails without any errors&mdash;an element your browser does not recognize will simply act as if it was a <code>&lt;span&gt;</code> tag.</p>
+  <p>Luckily, the Polymer CLI can help. It has a built in linter that will check to make sure all of the Custom Element tags used in your markup are properly imported. If an import is missing, the linter will alert you. To run the linter, run this comand in your terminal:</p>
+  <pre><code>$ polymer lint --rules polymer-2</code></pre>
+  <p>That will check your code against a suite of rules specific to Polymer 2 projects. If you're missing an HTML Import, you'll see a warning similar to this one:</p>
+  <pre><code>index.html(56,6) warning [undefined-elements] - The element google-map is not defined</code></pre>
+  </aside>
+
 <h3 class="faq"><strong>Frequently Asked Questions</strong></h3>
 <ul class="faq">
 <li><a href="https://www.webcomponents.org/element/GoogleWebComponents/google-map" target="_blank">Where are the reference docs for &lt;google-map&gt; and &lt;google-map&gt;</a>?</li>
