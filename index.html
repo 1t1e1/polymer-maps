@@ -206,13 +206,23 @@
 <pre><code>...
 
 &lt;script&gt;
-  var gMap = document.querySelector(&#39;google-map&#39;);
-  gMap.addEventListener(&#39;api-load&#39;, function(e) {
-    document.querySelector(&#39;google-map-directions&#39;).map = this.map;
-  });
+  (function() {
+    var gMap = document.querySelector('google-map');
+    var gMapDir = document.querySelector('google-map-directions');
+    var bindMaps = function() {
+      gMapDir.map = gMap.map;
+    };
+    if (gMap.map) {
+      bindMaps();
+    } else {
+      gMap.addEventListener('api-load', function(e) {
+        bindMaps();
+      });
+    }
+  }());
 &lt;/script&gt;
 &lt;/body&gt;</code></pre>
-<p><strong>Note</strong>: Waiting until the map element fires its api-load event ensures that the map has been loaded.</p>
+<p><strong>Note</strong>: Since we don't know if the map has been loaded yet, we check if it has loaded first, and then if it has not, we wait for the map element to fire its <code>api-load</code> event to ensure that the map has been loaded before we share the map property from the map with the directions.</p>
 <aside class="special"><p><strong>Wait, you said no code!</strong></p>
 <p>This step illustrated how you can configure an element using its events and properties. In the next step, you&#39;ll remove the code in favor of Polymer&#39;s declarative data binding features.</p>
 </aside>
