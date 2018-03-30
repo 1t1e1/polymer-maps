@@ -1,8 +1,8 @@
-Polymer Google Maps Codelab
+Polymer 2.x Google Maps Codelab
 ===
-See https://codelabs.developers.google.com/codelabs/polymer-maps/ for codelab instructions.
+See https://comcastsamples.github.io/polymer-maps/ for codelab instructions.
 
-Those instructions require the use of Chrome Dev Editor to download & run the project. If you prefer to work with your own IDE, this is for you.
+The [original instructions](https://codelabs.developers.google.com/codelabs/polymer-maps/) are for Polymer 1.x and require the use of Chrome Dev Editor to download & run the project. If you want to use a more recent version of Polymer and prefer to work with your own IDE, this is for you.
 
 ## Running the codelab without Chrome Dev Editor
 
