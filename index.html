@@ -325,7 +325,11 @@ https://www.polymer-project.org/2.0/docs/devguide/templates#dom-bind" target="_b
 <p>Would bind the <code>name</code> and <code>greeting</code> properties to the values assigned on the template.</p>
 <h2><strong>Data-bind the map ↔ directions element</strong></h2>
 <p>In the last step, you wrote JavaScript to set the direction&#39;s <code>map</code> property:</p>
-<pre><code>document.querySelector(&#39;google-map-directions&#39;).map = this.map;</code></pre>
+<pre><code>var gMap = document.querySelector('google-map');
+var gMapDir = document.querySelector('google-map-directions');
+var bindMaps = function() {
+  gMapDir.map = gMap.map;
+};</code></pre>
 <p><br>Both the maps and directions elements <a href="https://www.polymer-project.org/2.0/docs/devguide/properties" target="_blank">declare</a> a <code>map</code> property in their <code>properties</code> object. This means you can use an <strong>attribute</strong> of the same name to data-bind the the two <strong>properties</strong> together.</p>
 <aside class="special"><p><strong>Note: </strong>when data binding to an element&#39;s properties, the attribute name is lower case and &#34;-&#34; separated instead of camelCased. See <a href="https://www.polymer-project.org/2.0/docs/devguide/properties#property-name-mapping" target="_blank">attribute to property mappings</a> in the Polymer documentation.</p>
 </aside>
