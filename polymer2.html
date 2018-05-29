@@ -1,0 +1,566 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Build Google Maps Using Web Components &amp; No Code!</title>
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="elements/codelab.html">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <style>
+    body {
+      font-family: "Roboto",sans-serif;
+    }
+  </style>
+
+</head>
+<body unresolved class="fullbleed">
+
+  <google-codelab title="Build Google Maps Using Web Components &amp; No Code!"
+                  environment="web"
+                  feedback-link="https://github.com/ComcastSamples/polymer-maps/issues">
+
+      <google-codelab-step label="Overview" duration="1">
+        <p><img style="max-width: 624.00px" src="img/197fe633cb7e48b0.png"></p>
+<p>In this codelab, you&#39;ll create a fully working Google Maps app using elements in Polymer&#39;s <a href="https://www.webcomponents.org/collection/GoogleWebComponents/google-web-components" target="_blank">Google Web Components</a> collection. The app will be responsive and will include driving directions and transit mode. Along the way, you&#39;ll also learn about Polymer&#39;s data-binding features and <a href="https://www.webcomponents.org/collection/PolymerElements/iron-elements" target="_blank">iron element</a> set.</p>
+<h3 class="checklist">What you&#39;ll learn</h3>
+<ul class="checklist">
+<li>How to use elements in Polymer&#39;s iron, paper, and Google Web Component sets.</li>
+<li>How to use Polymer&#39;s data binding features to reduce boilerplate code.</li>
+</ul>
+<h3>What you&#39;ll need</h3>
+<ul>
+<li>Basic understanding of HTML, CSS, and web development.</li>
+<li>Install <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>, <a href="https://atom.io/">Atom</a>, or use your own editor of choice.</li>
+</ul>
+
+<aside class="special"><p>Note: this content is from Google's original <a href="https://codelabs.developers.google.com/codelabs/polymer-maps/">Build Google Maps Using Web Components &amp; No Code!</a> Polymer 1 Codelab, updated here for Polymer 2.</p></aside>
+
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="Getting set up" duration="8">
+        <h2><strong>Set up your local development environment</strong></h2>
+
+        <ol type="1" start="1">
+          <li><a href="https://git-scm.com/download/">Install Git</a></li>
+          <li><a href="https://nodejs.org/en/download/">Install Node and npm</a> (If you'd like to manage multiple version of Node, we recommend <a href="https://nodejs.org/en/download/" rel="nofollow">nvm</a>)</li>
+          <li>Install <a href="http://bower.io/">Bower</a> &amp; the <a href="https://github.com/Polymer/polymer-cli">Polymer CLI</a> globally:
+            <pre><code>$ npm install -g bower polymer-cli</code></pre>
+          </li>
+        </ol>
+
+        <aside class="special"><p><strong>What is Bower?</strong></p>
+          <p><a href="http://bower.io/" target="_blank">Bower</a> is a client-side package management tool that can be used with any web app. When working with Polymer, it simplifies the hassles of dependency management. Every component defines its own set of dependencies. When you use Bower to install a component, the component&#39;s dependencies are installed alongside it under <code>bower_components/</code>.</p>
+          </aside>
+
+        <h2><strong>Clone the project &amp; Install dependencies</strong></h2>
+
+        <ol type="1" start="1">
+          <li>In your terminal, from the folder you hold your projects in, clone the <a href="https://github.com/ComcastSamples/polymer-maps">Polymer Google Maps Codelab</a>
+            <pre><code>$ git clone https://github.com/ComcastSamples/polymer-maps.git</code></pre></li>
+          <li>Change into the directory you just cloned <pre><code>$ cd polymer-maps</code></pre></li>
+          <li>Install the dependencies for that project by running <pre><code>$ bower install</code></pre></li>
+        </ol>
+
+
+<p>When you run <code>$ bower install</code>, Bower will download and install a list of dependencies (including the Polymer core library) into the <code>bower_components</code>/ folder. <strong>Fetching the components may take some time if your Internet connection is slow</strong>. </p>
+
+<p>Your folder structure should contain these files (among a few others):</p>
+<pre><code>polymer-maps/
+  bower_components/ &lt;!-- installed dependencies from Bower --&gt;
+  bower.json  &lt;!-- Bower metadata files used for managing deps --&gt;
+  index.html  &lt;!-- your app --&gt;
+  main.js
+  styles.css
+</code></pre>
+<h2><strong>Preview the app</strong></h2>
+<p>Using the Polymer CLI we installed earlier, start up a local dev server with</p>
+<pre><code>$ polymer serve</code></pre>
+<p>Once that command prints out the folllowing, your server is running:</p>
+<pre><code>info:    Files in this directory are available under the following URLs
+      applications: http://127.0.0.1:8081
+      reusable components: http://127.0.0.1:8081/components/polymer-maps/
+</code></pre>
+
+<p>Once the server is running, navigate to <a href="http://127.0.0.1:8081">http://127.0.0.1:8081</a> to view your app. This is a great way to preview changes as you make them.</p>
+<h2><strong>Next up</strong></h2>
+<p>At this point the app doesn&#39;t do much. Let&#39;s add a map!</p>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="Using google-map" duration="8">
+        <p>The <a href="https://www.webcomponents.org/collection/GoogleWebComponents/google-web-components" target="_blank">Google Web Components</a> collection provides the <code>&lt;google-map&gt;</code> element for declaratively rendering a Google Map. To use it, you first need to install it using Bower.</p>
+
+<h2><strong>Install the google-map element</strong></h2>
+<aside class="special"><p><strong>It's already done!</strong></p>
+<p>In the interest of time (and to respect the unpredictable nature of Conference Wi-Fi), all dependencies you need for this codelab were included in the <code>bower.json</code> when you did a git clone of the project. If you wanted to use these elements in a new project, from the command line you would run<br><code>bower install GoogleWebComponents/google-map --save</code><br>in your app&#39;s directory to install <code>&lt;google-map&gt;</code> and save it as a dependency. </p>
+</aside>
+
+<p>You can verify that <code>&lt;google-map&gt;</code> (and any dependencies) was installed by checking that <code>bower_components/google-map/</code> was created and populated.</p>
+<h2><strong>Obtain a Maps API key</strong></h2>
+<p>To use the map element, you&#39;ll need to obtain an API key for the Google Maps API. Visit <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">https://developers.google.com/maps/documentation/javascript/get-api-key</a> and copy your key. We&#39;ll use it in the next step.</p>
+<h2><strong>Use the google-map element</strong></h2>
+<p>To employ <code>&lt;google-map&gt;</code>, you need to:</p>
+<ol type="1" start="1">
+<li>Use an <a href="http://www.html5rocks.com/en/tutorials/webcomponents/imports/" target="_blank">HTML Import</a> to load it in <code>index.html</code>.</li>
+<li>Declare an instance of the element on the page.</li>
+</ol>
+<p>In <code>index.html</code>, replace the <code>&lt;!-- HTML Imports go here. Format: &lt;link rel="import" href=""&gt; --&gt;</code> HTML comment in the <strong><code>&lt;head&gt;</code></strong> and replace it with a single import that loads <code>google-map.html</code>:</p>
+<h3>index.html</h3>
+<pre><code>&lt;head&gt;
+  ....
+  &lt;script src=&#34;bower_components/webcomponentsjs/webcomponents-loader.js&#34;&gt;&lt;/script&gt;
+
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/google-map/google-map.html&#34;&gt;
+
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;styles.css&#34;&gt;
+&lt;/head&gt;</code></pre>
+<aside class="warning"><p><strong>Important</strong>: all imports need to come <strong>after </strong><code>webcomponents-loader.js</code> so the polyfill can properly load them.</p>
+</aside>
+<p>Next, replace the contents of <code>&lt;body&gt;</code> with an instance of <code>&lt;google-map&gt;</code>:</p>
+<h3>index.html</h3>
+<pre><code>&lt;body&gt;
+  &lt;google-map latitude=&#34;37.779&#34; longitude=&#34;-122.3892&#34; zoom=&#34;13&#34;
+      api-key=&#34;YOUR_KEY&#34;&gt;&lt;/google-map&gt;
+&lt;/body&gt;</code></pre>
+<p>As you can see, using <code>&lt;google-map&gt;</code> is completely declarative! The map is centered using the <code>latitude</code> and <code>longitude</code> attributes and its zoom level is set by the <code>zoom</code> attribute. We&#39;ve also specified our API key for the Maps API using the <code>api-key</code> attribute.</p>
+<h3><strong>Style the map</strong></h3>
+<p>If you run the app right now, nothing will display. In order for the map to properly display itself, you need to set its container (in this case, <code>&lt;body&gt;</code>) to have a fixed height.</p>
+<p>Open <code>styles.css</code> and replace its contents with default styling:</p>
+<h3>styles.css</h3>
+<pre><code>body, html {
+  font-family: &#39;Roboto&#39;, Arial, sans-serif;
+  height: 100%;
+  margin: 0;
+}</code></pre>
+<h3>Add<strong> a marker</strong></h3>
+<p><code>&lt;google-map&gt;</code> supports adding map markers to the map by declaring <code>&lt;google-map-marker&gt;</code> elements as children. The marker locations are also set using <code>latitude</code> and <code>longitude</code> attributes.</p>
+<p>Back in <strong>index.html</strong>, add a draggable <code>&lt;google-map-marker&gt;</code> to the map:</p>
+<h3>index.html</h3>
+<pre><code>&lt;google-map latitude=&#34;37.779&#34; longitude=&#34;-122.3892&#34;
+    api-key=&#34;YOUR_KEY&#34; zoom=&#34;13&#34; disable-default-ui&gt;
+  &lt;google-map-marker latitude=&#34;37.779&#34; longitude=&#34;-122.3892&#34;
+      title=&#34;Go Giants!&#34; draggable=&#34;true&#34;&gt;&lt;/google-map-marker&gt;
+&lt;/google-map&gt;</code></pre>
+<p>Notice that we&#39;ve also disabled the map&#39;s controls by setting <code>disableDefaultUi</code> to true. Since it&#39;s a boolean property, its presence as an HTML attribute makes it truthy.</p>
+<h2><strong>Run the app</strong></h2>
+<p>If you haven&#39;t already done so, navigate to <a href="http://127.0.0.1:8081/">http://127.0.0.1:8081/</a>. At this point, you should see a map that takes up the entire viewport and has a single marker pin.</p>
+<p><img style="max-width: 624.00px" src="img/bc91a8850a10582c.png"></p>
+
+<aside class="special"><p><strong>Is your map missing?</strong></p>
+  <p>One of the most common mistakes made when first developing with Polymer is adding a Custom Element to your markup and forgetting to include the HTML Import of that Custom Element. If you do that, your Custom Element's definition will not be loaded and will therefore not render as you expect. It can be difficult to realize because it fails without any errors&mdash;an element your browser does not recognize will simply act as if it was a <code>&lt;span&gt;</code> tag.</p>
+  <p>Luckily, the Polymer CLI can help. It has a built in linter that will check to make sure all of the Custom Element tags used in your markup are properly imported. If an import is missing, the linter will alert you. To run the linter, run this comand in your terminal:</p>
+  <pre><code>$ polymer lint --rules polymer-2</code></pre>
+  <p>That will check your code against a suite of rules specific to Polymer 2 projects. If you're missing an HTML Import, you'll see a warning similar to this one:</p>
+  <pre><code>index.html(56,6) warning [undefined-elements] - The element google-map is not defined</code></pre>
+  </aside>
+
+<h3 class="faq"><strong>Frequently Asked Questions</strong></h3>
+<ul class="faq">
+<li><a href="https://www.webcomponents.org/element/GoogleWebComponents/google-map" target="_blank">Where are the reference docs for &lt;google-map&gt; and &lt;google-map&gt;</a>?</li>
+</ul>
+<h2><strong>Next up</strong></h2>
+<p>We&#39;ll add driving directions!</p>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="Add driving directions" duration="12">
+        <p>The <code>&lt;google-map-directions&gt;</code> element was installed alongside <code>&lt;google-map&gt;</code>. It provides driving direction information using the Google Maps API.</p>
+<h2>Use the google-map-directions element</h2>
+<p>To employ <code>&lt;google-map-directions&gt;</code>:</p>
+<ol type="1" start="1">
+<li>Use an HTML Import to load it in <code>index.html</code>.</li>
+<li>Declare an instance of the element on the page.</li>
+<li>&#34;Connect&#34; it to the map.</li>
+</ol>
+<p>In <code>index.html</code>, add an HTML Import for <code>google-map-directions.html</code>:</p>
+<h3>index.html</h3>
+<pre><code>&lt;head&gt;
+  ....
+  &lt;script src=&#34;bower_components/webcomponentsjs/webcomponents-loader.js&#34;&gt;&lt;/script&gt;
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/google-map/google-map.html&#34;&gt;
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/google-map/google-map-directions.html&#34;&gt;
+&lt;/head&gt;</code></pre>
+<p>Declare <code>&lt;google-map-directions&gt;</code> as a sibling of <code>&lt;google-map&gt;</code>. Set its <code>start-address</code> attribute to &#34;<strong>San Francisco</strong>&#34; and the <code>end-address</code> to &#34;<strong>Mountain View</strong>&#34;.</p>
+<h3>index.html</h3>
+<pre><code>&lt;body&gt;
+  &lt;google-map latitude=&#34;37.779&#34; longitude=&#34;-122.3892&#34;
+      api-key=&#34;YOUR_KEY&#34; zoom=&#34;13&#34; disable-default-ui&gt;
+    ...
+  &lt;/google-map&gt;
+  &lt;google-map-directions
+      start-address=&#34;San Francisco&#34;
+      end-address=&#34;Mountain View&#34;
+      api-key=&#34;YOUR_KEY&#34;&gt;&lt;/google-map-directions&gt;
+&lt;/body&gt;</code></pre>
+<h2><strong>Hooking up directions to the map</strong></h2>
+<p><code>&lt;google-map-directions&gt;</code> fetches directions, but it isn&#39;t that useful by itself. You need to connect the results from <code>&lt;google-map-directions&gt;</code> to <code>&lt;google-map&gt;</code> so the directions render on the map.</p>
+<p>Both elements expose a <code>.map</code> property that allow users to access/set an underlying <code>Map</code> object (used by the Google Maps JavaScript API). To get these two elements talking, set them to use the same <code>Map</code> object.</p>
+<p>At the bottom of <strong>index.html</strong>, set the directions element to share the map:</p>
+<p><strong>index.html</strong></p>
+<pre><code>...
+
+&lt;script&gt;
+  (function() {
+    var gMap = document.querySelector('google-map');
+    var gMapDir = document.querySelector('google-map-directions');
+    var bindMaps = function() {
+      gMapDir.map = gMap.map;
+    };
+    if (gMap.map) {
+      bindMaps();
+    } else {
+      gMap.addEventListener('api-load', function(e) {
+        bindMaps();
+      });
+    }
+  }());
+&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+<p><strong>Note</strong>: Since we don't know if the map has been loaded yet, we check if it has loaded first, and then if it has not, we wait for the map element to fire its <code>api-load</code> event to ensure that the map has been loaded before we share the map property from the map with the directions.</p>
+<aside class="special"><p><strong>Wait, you said no code!</strong></p>
+<p>This step illustrated how you can configure an element using its events and properties. In the next step, you&#39;ll remove the code in favor of Polymer&#39;s declarative data binding features.</p>
+</aside>
+<h2><strong>Run the app</strong></h2>
+<ol>
+  <li>Make sure your server is running. If not, run <code>$ polymer serve</code>.</li>
+  <li>Navigate to <a href="http://127.0.0.1:8081/">http://127.0.0.1:8081/</a>.</li>
+</ol>
+<p>At this point, you should see the map, a marker, and added driving directions between <strong>San Francisco</strong> and <strong>Mountain View</strong>.</p>
+<p><img style="max-width: 624.00px" src="img/c787a2cd69d7263b.png"></p>
+<h2><strong>Next up</strong></h2>
+<p>Learn Polymer&#39;s data-binding features and allow users to input their own start and end addresses.</p>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="Add address inputs" duration="12">
+        <p>Let&#39;s add input fields to allow users to input the start and end addresses. Polymer provides several elements for working with input: <code>paper-card, paper-item, paper-input</code>, <code>iron-icon</code>, and <code>iron-icons</code>.</p>
+<p>In <strong>index.html</strong>, add new HTML Imports for these components:</p>
+<h3>index.html</h3>
+<pre><code>&lt;head&gt;
+  ....
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/iron-icon/iron-icon.html&#34;&gt;
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/iron-icons/iron-icons.html&#34;&gt;
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/paper-item/paper-item.html&#34;&gt;
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/paper-item/paper-icon-item.html&#34;&gt;
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/paper-input/paper-input.html&#34;&gt;
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/paper-card/paper-card.html&#34;&gt;
+&lt;/head&gt;</code></pre>
+<p>At the bottom of the page, declare two <code>&lt;paper-icon-item&gt;</code> elements and a material design input for the start and end addresses. <code>&lt;paper-icon-item&gt;</code> is a convenience element for making an item with an icon. </p>
+<pre><code>&lt;paper-icon-item&gt;
+  &lt;paper-input label=&#34;Start address&#34; value=&#34;San Francisco&#34;&gt;&lt;/paper-input&gt;
+&lt;/paper-icon-item&gt;
+&lt;paper-icon-item&gt;
+  &lt;paper-input label=&#34;End address&#34; value=&#34;Mountain View&#34;&gt;&lt;/paper-input&gt;
+&lt;/paper-icon-item&gt;</code></pre>
+<h3><strong>Add search icons</strong></h3>
+<p><code>&lt;iron-icon&gt;</code> is an element useful for displaying an icon. It takes an <code>icon</code> attribute, which references an icon from Polymer&#39;s default <a href="https://elements.polymer-project.org/elements/iron-icons?view=demo:demo/index.html" target="_blank">icon sets</a>.</p>
+<ol type="1" start="1">
+<li>Inside each item add an <code>&lt;iron-icon&gt;</code> element.</li>
+<li>Set the <code>icon</code> attribute to <code>icon=&#34;search&#34;</code>.</li>
+</ol>
+<pre><code>&lt;paper-icon-item&gt;
+  &lt;iron-icon icon=&#34;search&#34; slot=&#34;item-icon&#34;&gt;&lt;/iron-icon&gt;
+  &lt;paper-input label=&#34;Start address&#34; value=&#34;San Francisco&#34;&gt;&lt;/paper-input&gt;
+&lt;/paper-icon-item&gt;
+&lt;paper-icon-item&gt;
+  &lt;iron-icon icon=&#34;search&#34; slot=&#34;item-icon&#34;&gt;&lt;/iron-icon&gt;
+  &lt;paper-input label=&#34;End address&#34; value=&#34;Mountain View&#34;&gt;&lt;/paper-input&gt;
+&lt;/paper-icon-item&gt;</code></pre>
+<aside class="warning"><p><strong>Important</strong>: Be sure to include the <code>slot="item-icon"</code> attribute on each <code>&lt;iron-icon&gt;</code>. This tells the <code>&lt;paper-icon-item&gt;</code>  which child element it should use as the icon.</p>
+</aside>
+<h3><strong>Add a material design card</strong></h3>
+<p>Wrapping our inputs in a <a href="https://www.google.com/design/spec/components/cards.html" target="_blank">material design</a> <code>&lt;paper-card&gt;</code> is a great way to highlight this part of the app.</p>
+<pre><code>&lt;paper-card elevation=&#34;2&#34;&gt; &lt;!-- elevation controls the amount of box shadow --&gt;
+  &lt;paper-icon-item&gt;
+    ...
+  &lt;/paper-icon-item&gt;
+  &lt;paper-icon-item&gt;
+    ...
+  &lt;/paper-icon-item&gt;
+&lt;/paper-card&gt;</code></pre>
+<p>In <strong>styles.css</strong>, add default styling to the card so it displays in the lower left corner, above the map.</p>
+<h3>styles.css</h3>
+<pre><code>paper-card {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  z-index: 1;
+}</code></pre>
+<p><img style="max-width: 270.00px" src="img/7d15d713a9f100d9.png"></p>
+<h2><strong>Next up</strong></h2>
+<p>Use Polymer&#39;s data binding features to drive the driving directions from the address inputs.</p>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="Data binding the user&#39;s search" duration="12">
+        <p>In the last step, we created search inputs for the driving directions. In this step of the codelab, we&#39;ll hook them up to power <code>&lt;google-map-directions&gt;</code>.</p>
+<h2><strong>Use data-binding outside of Polymer</strong></h2>
+<p>Polymer&#39;s <a href="https://www.polymer-project.org/2.0/docs/devguide/data-binding" target="_blank">data-binding features</a> are only available when creating a <code>&lt;dom-module&gt;</code> inside a template managed by Polymer.
+
+To use Polymer bindings for elements placed in the <b>main document</b>, use the <a href="
+https://www.polymer-project.org/2.0/docs/devguide/templates#dom-bind" target="_blank"><code>&lt;dom-bind&gt;</code></a> element.
+
+  Essentially, it allows you to use Polymer sugaring features outside of Polymer.  For example, it allows you to use <code>{{}}</code> bindings with elements in your main page.</p>
+<p>Properties defined on  an <code>&lt;dom-bind&gt;</code> can be data bound. For example:</p>
+<pre><code>&lt;dom-bind id=&#34;t&#34;&gt;
+  &lt;template&gt;
+    &lt;!-- Hello, Eric. How are you today? --&gt;
+    Hello, &lt;span&gt;{{name}}&lt;/span&gt;. &lt;span&gt;{{greeting}}&lt;/span&gt;
+  &lt;/template&gt;
+&lt;/dom-bind&gt;
+
+&lt;script&gt;
+  var t = document.querySelector(&#39;#t&#39;);
+  t.name = &#39;Eric&#39;;
+  t.greeting = &#39;How are you today?&#39;;
+&lt;/script&gt;</code></pre>
+<p>Would bind the <code>name</code> and <code>greeting</code> properties to the values assigned on the template.</p>
+<h2><strong>Data-bind the map ↔ directions element</strong></h2>
+<p>In the last step, you wrote JavaScript to set the direction&#39;s <code>map</code> property:</p>
+<pre><code>var gMap = document.querySelector('google-map');
+var gMapDir = document.querySelector('google-map-directions');
+var bindMaps = function() {
+  gMapDir.map = gMap.map;
+};</code></pre>
+<p><br>Both the maps and directions elements <a href="https://www.polymer-project.org/2.0/docs/devguide/properties" target="_blank">declare</a> a <code>map</code> property in their <code>properties</code> object. This means you can use an <strong>attribute</strong> of the same name to data-bind the the two <strong>properties</strong> together.</p>
+<aside class="special"><p><strong>Note: </strong>when data binding to an element&#39;s properties, the attribute name is lower case and &#34;-&#34; separated instead of camelCased. See <a href="https://www.polymer-project.org/2.0/docs/devguide/properties#property-name-mapping" target="_blank">attribute to property mappings</a> in the Polymer documentation.</p>
+</aside>
+<ol type="1" start="1">
+<li>In <strong>index.html</strong>, remove the <code>&lt;script&gt;</code> you added in Step 4.</li>
+<li>Wrap the existing markup in <code>&lt;body&gt;</code>inside a <code>&lt;dom-bind&gt;&lt;template&gt;...&lt;/template&gt;&lt;/dom-bind&gt;</code>.</li>
+<li>Bind the <code>map</code> attribute of <code>&lt;google-map&gt;</code> to the <code>map</code> attribute of <code>&lt;google-map-directions&gt;</code>. Make sure this is done inside <code>&lt;dom-bind&gt;&lt;template&gt;...&lt;/template&gt;&lt;/dom-bind&gt;</code>. This will bind the elements&#39; <code>map</code> properties together. When one changes, the other will too.</li>
+</ol>
+<pre><code>&lt;dom-bind&gt;
+  &lt;template&gt;
+    &lt;google-map map=&#34;{{map}}&#34; ...&gt;&lt;/google-map&gt;
+    &lt;google-map-directions map=&#34;{{map}}&#34;...&gt;&lt;/google-map-directions&gt;
+  &lt;/template&gt;
+&lt;/dom-bind&gt;</code></pre>
+<p><strong>Note</strong>: We&#39;ve used <code>{{map}}</code> as the binding property name, but you can use whatever name you like (for example, <code>map=&#34;{{foo}}&#34;)</code>.</p>
+<h2><strong>Data-bind the address inputs ↔ directions element</strong></h2>
+<p>Right now, the <code>startAddress</code> and <code>endAddress</code> properties are hardcoded to <strong>&#34;San Francisco&#34;</strong> and <strong>&#34;Mountain View&#34;</strong>, respectively.</p>
+<pre><code>&lt;google-map-directions
+    start-address=&#34;San Francisco&#34; end-address=&#34;Mountain View&#34;
+    api-key=&#34;YOUR_KEY&#34;&gt;
+&lt;/google-map-directions&gt;</code></pre>
+<p><br>Likewise, the address inputs are hardcoded:</p>
+<pre><code>&lt;paper-input label=&#34;Start address&#34; value=&#34;San Francisco&#34;&gt;&lt;/paper-input&gt;
+&lt;paper-input label=&#34;End address&#34; value=&#34;Mountain View&#34;&gt;&lt;/paper-input&gt;</code></pre>
+<p>We can make things more dynamic by binding these inputs to the attributes of the <code>&lt;google-map-directions&gt;</code>.</p>
+<p>Bind the <code>startAddress</code> and <code>endAddress</code> to the <code>value</code> of the appropriate input:</p>
+<h3>index.html</h3>
+<pre><code>&lt;dom-bind&gt;
+  &lt;template&gt;
+
+    &lt;google-map map=&#34;{{map}}&#34; latitude=&#34;37.779&#34; longitude=&#34;-122.3892&#34;
+        api-key=&#34;YOUR_KEY&#34; disable-default-ui zoom=&#34;13&#34;&gt;
+      &lt;google-map-marker latitude=&#34;37.779&#34; longitude=&#34;-122.3892&#34;
+        title=&#34;Go Giants!&#34; draggable=&#34;true&#34;&gt;&lt;/google-map-marker&gt;
+    &lt;/google-map&gt;
+
+    &lt;google-map-directions map=&#34;{{map}}&#34;
+        start-address=&#34;{{start}}&#34;
+        end-address=&#34;{{end}}&#34;
+        api-key=&#34;YOUR_KEY&#34;&gt;&lt;/google-map-directions&gt;
+
+    &lt;paper-card elevation=&#34;2&#34;&gt;
+      &lt;paper-icon-item&gt;
+        &lt;iron-icon icon=&#34;search&#34; slot=&#34;item-icon&#34;&gt;&lt;/iron-icon&gt;
+        &lt;paper-input label=&#34;Start address&#34;
+                     value=&#34;{{start}}&#34;&gt;&lt;/paper-input&gt;
+      &lt;/paper-icon-item&gt;
+      &lt;paper-icon-item&gt;
+        &lt;iron-icon icon=&#34;search&#34; slot=&#34;item-icon&#34;&gt;&lt;/iron-icon&gt;
+        &lt;paper-input label=&#34;End address&#34;
+                     value=&#34;{{end}}&#34;&gt;&lt;/paper-input&gt;
+      &lt;/paper-icon-item&gt;
+    &lt;/paper-card&gt;
+
+  &lt;/template&gt;
+&lt;/dom-bind&gt;</code></pre>
+<p>The name you use in each <code>{{}}</code> doesn&#39;t matter, as long as the binding names match for each pair of properties you want to bind together.</p>
+
+<p>Also note we've wrapped <em>all</em> of the elements in a single <code>&lt;dom-bind&gt;&lt;template&gt;...&lt;/template&gt;&lt;/dom-bind&gt;</code>.</p>
+
+<h2><strong>Run the app</strong></h2>
+<ol type="1" start="1">
+<li>Make sure your server is running. If not, run <code>$ polymer serve</code>.</li>
+<li>Navigate to <a href="http://127.0.0.1:8081/">http://127.0.0.1:8081/</a>.</li>
+<li>Enter <strong>California</strong> for the start address.</li>
+<li>Enter <strong>NYC</strong> for the end address.</li>
+</ol>
+<p>You should see the map update itself with driving directions from <strong>California</strong> to <strong>New York</strong>:</p>
+<p><img style="max-width: 624.00px" src="img/5274c184bd1d05e0.png"></p>
+<p>Try entering other destinations! You should see the map update as new destinations are entered.</p>
+
+<h2><strong>Next up</strong></h2>
+<p>Allow users to select the type of directions (walking, transit, driving).</p>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="Changing the form of travel" duration="12">
+        <h2><strong>Import the components for this step</strong></h2>
+<p>In <strong>index.html</strong>, add the following HTML Imports to the <code>&lt;head&gt;</code>:</p>
+<h3>index.html</h3>
+<pre><code>&lt;head&gt;
+  ....
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/iron-icons/maps-icons.html&#34;&gt;
+  &lt;link rel=&#34;import&#34; href=&#34;bower_components/paper-tabs/paper-tabs.html&#34;&gt;
+&lt;/head&gt;</code></pre>
+<p><strong>Note: </strong><code>maps-icons</code> is required to load Polymer&#39;s <a href="https://www.webcomponents.org/element/PolymerElements/iron-icons/demo/demo/index.html" target="_blank">map iconset</a>. You&#39;ll use it later to render icons for the travel modes.</p>
+<h2><strong>Creating a travel mode selector</strong></h2>
+<p>We&#39;ll use <code>&lt;paper-tabs&gt;</code> to allow users to select their travel type. Each transit mode will also use an icon from the <code>maps</code> icon set instead of the default one. To use one of the other icon sets, the <code>icon</code> attribute takes the form: <code>&lt;iconset&gt;:&lt;name&gt;</code>, where <code>&lt;iconset&gt;</code> is the name of the icon set (e.g. &#34;maps&#34;) and <code>&lt;name&gt;</code> is the name of the icon from that set.</p>
+<p>As an example, the following code places the <code>directions-car</code> icon from the <code>maps</code> icon set:</p>
+<pre><code>&lt;iron-icon icon=&#34;maps:directions-car&#34; item-icon&gt;&lt;/iron-icon&gt;</code></pre>
+<p>The <code>&lt;google-map-directions&gt;</code> element contains a <code>travelMode</code> property for specifying </p>
+<p>the type of directions to render. It has four possible values: &#34;<strong>DRIVING</strong>&#34;, &#34;<strong>WALKING</strong>&#34;, &#34;<strong>BICYCLING</strong>&#34;, and &#34;<strong>TRANSIT</strong>&#34;.</p>
+<ol type="1" start="1">
+<li>In <strong>index.html </strong>within the <code>&lt;paper-card&gt;</code> container, add a <code>&lt;paper-tabs&gt;</code> with the travel mode options.</li>
+<li>For each type of transit mode, add an <code>&lt;iron-icon&gt;</code> and <code>&lt;span&gt;</code> containing helper text.</li>
+</ol>
+<h3>index.html</h3>
+<pre><code>&lt;paper-card elevation=&#34;2&#34;&gt;
+...
+
+&lt;!-- selected=&#34;0&#34; selects the first item in the tab list.
+     Change it to another index if you want a different default. --&gt;
+&lt;paper-tabs selected=&#34;0&#34;&gt;
+  &lt;paper-tab&gt;
+    &lt;iron-icon icon=&#34;maps:directions-car&#34;&gt;&lt;/iron-icon&gt;
+    &lt;span&gt;DRIVING&lt;/span&gt;
+  &lt;/paper-tab&gt;
+  &lt;paper-tab&gt;
+    &lt;iron-icon icon=&#34;maps:directions-walk&#34;&gt;&lt;/iron-icon&gt;
+    &lt;span&gt;WALKING&lt;/span&gt;
+  &lt;/paper-tab&gt;
+  &lt;paper-tab&gt;
+    &lt;iron-icon icon=&#34;maps:directions-bike&#34;&gt;&lt;/iron-icon&gt;
+    &lt;span&gt;BICYCLING&lt;/span&gt;
+  &lt;/paper-tab&gt;
+  &lt;paper-tab&gt;
+    &lt;iron-icon icon=&#34;maps:directions-transit&#34;&gt;&lt;/iron-icon&gt;
+    &lt;span&gt;TRANSIT&lt;/span&gt;
+  &lt;/paper-tab&gt;
+&lt;/paper-tabs&gt;
+
+&lt;/paper-card&gt;</code></pre>
+<h2>Styling the tab strip</h2>
+<p><code>&lt;paper-tabs&gt;</code> is styled by default. It has a yellow material design ink effect and selection bar indication the selected tab. We can make it nicer!</p>
+<p>Polymer uses <a href="https://www.polymer-project.org/2.0/docs/devguide/custom-css-properties" target="_blank">CSS custom properties</a> to expose styling hooks for internal parts of a component&#39;s Shady DOM. For example,  <a href="https://www.webcomponents.org/element/PolymerElements/paper-tabs/elements/paper-tabs#styling" target="_blank">paper-tabs</a> exposes <code>--paper-tabs-selection-bar-color</code> to colorize the tab&#39;s selection bar.</p>
+<p>CSS custom properties are coming natively to browsers. Until they do, Polymer provides <a href="https://www.polymer-project.org/2.0/docs/devguide/custom-css-properties#create-global-styles" target="_blank"><code>&lt;custom-style&gt;</code></a>, a custom element that wraps the <code>&lt;style&gt;</code> tag and teaches it the custom properties styling system.  To use this element, define it in the <code>&lt;head&gt;</code> of your main page:</p>
+<h3>index.html</h3>
+<pre><code>&lt;head&gt;
+  ...
+  &lt;custom-style&gt;
+    &lt;style&gt;
+      paper-tabs {
+        --paper-tabs-selection-bar-color: #0D47A1;
+        margin-top: 16px;
+      }
+      paper-tab {
+        --paper-tab-ink: #BBDEFB;
+      }
+
+      /* Other styles that make things more pleasant.
+        These could instead be added in styles.css since they
+        do not use any Polymer styling features. */
+      paper-tab iron-icon {
+        margin-right: 10px;
+      }
+      paper-tab.iron-selected {
+        background: rgb(66, 133, 244);
+        color: white;
+      }
+    &lt;/style&gt;
+  &lt;/custom-style&gt;
+&lt;/head&gt;</code></pre>
+<p>This bit of code will colorize the selection bar and ink ripple effect a nice <a href="https://www.google.com/design/spec/style/color.html#color-color-palette" target="_blank">material design blue</a>.</p>
+<aside class="special"><p><strong>Note: </strong>you can read up on <a href="https://www.webcomponents.org/element/PolymerElements/paper-tabs/elements/paper-tabs#styling" target="_blank">paper-tabs</a> and <a href="https://www.webcomponents.org/element/PolymerElements/paper-tabs/elements/paper-tab#styling" target="_blank">paper-tab</a> styling hooks in their element documentation pages.</p>
+</aside>
+<p><img style="max-width: 510.00px" src="img/69c6ee0158b29da.png"></p>
+<h2><strong>Data-bind the travel mode selector ↔ directions element</strong></h2>
+<p>The last thing you need to do is data-bind the <code>travelMode</code> property of <code>&lt;google-map-directions&gt;</code> to <code>&lt;paper-tabs&gt;</code>&#39;s <code>.selected</code> property. The tabs updates this property whenever a new child item is selected. By default, its set to the index of the selected item. We need to override this in order to bind to the string value of each direction type. The <code>attr-for-selected</code> property does just that.</p>
+<p>Bind the direction&#39;s <code>travelMode</code> property to the tab&#39;s <code>selected</code> property:</p>
+<h3>index.html</h3>
+<pre><code>&lt;google-map-directions map=&#34;{{map}}&#34; api-key=&#34;YOUR_KEY&#34;
+      start-address=&#34;{{start}}&#34;
+      end-address=&#34;{{end}}&#34;
+      travel-mode=&#34;[[travelMode]]&#34;&gt;&lt;/google-map-directions&gt;
+...
+
+&lt;paper-card&gt;
+
+&lt;paper-tabs selected=&#34;{{travelMode}}&#34; attr-for-selected=&#34;label&#34;&gt;
+  &lt;paper-tab label=&#34;DRIVING&#34;&gt;
+    &lt;iron-icon icon=&#34;maps:directions-car&#34;&gt;&lt;/iron-icon&gt;
+    &lt;span&gt;DRIVING&lt;/span&gt;
+  &lt;/paper-tab&gt;
+  &lt;paper-tab label=&#34;WALKING&#34;&gt;
+    &lt;iron-icon icon=&#34;maps:directions-walk&#34;&gt;&lt;/iron-icon&gt;
+    &lt;span&gt;WALKING&lt;/span&gt;
+  &lt;/paper-tab&gt;
+  &lt;paper-tab label=&#34;BICYCLING&#34;&gt;
+    &lt;iron-icon icon=&#34;maps:directions-bike&#34;&gt;&lt;/iron-icon&gt;
+    &lt;span&gt;BICYCLING&lt;/span&gt;
+  &lt;/paper-tab&gt;
+  &lt;paper-tab label=&#34;TRANSIT&#34;&gt;
+    &lt;iron-icon icon=&#34;maps:directions-transit&#34;&gt;&lt;/iron-icon&gt;
+    &lt;span&gt;TRANSIT&lt;/span&gt;
+  &lt;/paper-tab&gt;
+&lt;/paper-tabs&gt;
+
+&lt;/paper-card&gt;</code></pre>
+<aside class="special"><p><strong>Note: </strong>We&#39;ve also stuck <code>label</code> attributes on each <code>&lt;paper-tab&gt;</code>. When a new item is selected, <code>&lt;paper-tabs&gt;</code> sets its <code>selected</code> property to the value of this attribute on the selected child. The name <code>label</code> is set in <code>attr-for-selected=&#34;label&#34;.</code></p>
+</aside>
+<h2><strong>Run the app</strong></h2>
+<ol type="1" start="1">
+<li>Make sure your server is running. If not, run <code>$ polymer serve</code>.</li>
+<li>Navigate to <a href="http://127.0.0.1:8081/">http://127.0.0.1:8081/</a>.</li>
+<li>Enter <strong>San Fran</strong> for the start address.</li>
+<li>Enter <strong>Oakland, CA</strong> for an end address.</li>
+<li>Click the different modes of travel.</li>
+</ol>
+<p>The map should automatically update to show different forms of travel:</p>
+<p><img style="max-width: 624.00px" src="img/473ccbd46c694eb5.png"></p>
+
+
+      </google-codelab-step>
+
+      <google-codelab-step label="That&#39;s all folks!" duration="0">
+        <p>You built an entire maps application complete with driving directions, and all without writing a single line of code!</p>
+<p><strong>Think about that for a second</strong>. This just goes to show you the power of web components. They&#39;re reusable and composable. Zest in Polymer&#39;s data-binding features and you can create an entire app using nothing but declarative markup.</p>
+<h2>What you&#39;ve learn<strong>ed</strong></h2>
+<ul>
+<li>How to use elements in Polymer&#39;s iron, paper, and Google Web Component sets.</li>
+<li>How to use Polymer&#39;s styling system and CSS custom properties to style the internal styling hooks a component specifies.</li>
+<li>How to use Polymer&#39;s data binding features to reduce boilerplate code.</li>
+</ul>
+<h2><strong>Learn More</strong></h2>
+<h3><strong>Polymer</strong></h3>
+<ul>
+<li><a href="https://www.polymer-project.org/" target="_blank">polymer-project.org</a></li>
+<li><a href="https://www.webcomponents.org/collection/PolymerElements/iron-elements" target="_blank">Iron elements</a> documentation</li>
+<li><a href="https://www.webcomponents.org/collection/PolymerElements/paper-elements" target="_blank">Paper elements</a> documentation</li>
+<li><a href="http://stackoverflow.com/questions/tagged/polymer" target="_blank">Polymer tag</a> on Stack Overflow</li>
+</ul>
+<h3>Other</h3>
+<ul>
+<li><a href="https://www.webcomponents.org/collection/GoogleWebComponents/google-web-components" target="_blank">Google Web Components</a> documentation</li>
+<li><a href="https://www.webcomponents.org/" target="_blank">webcomponents.org</a></li>
+</ul>
+
+
+      </google-codelab-step>
+
+  </google-codelab>
+</body>
+</html>
