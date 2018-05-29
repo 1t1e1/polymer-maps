@@ -35,7 +35,7 @@
 <li>Install <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>, <a href="https://atom.io/">Atom</a>, or use your own editor of choice.</li>
 </ul>
 
-<aside class="special"><p>Note: this content is from Google's original <a href="https://codelabs.developers.google.com/codelabs/polymer-maps/">Build Google Maps Using Web Components &amp; No Code!</a> Polymer 1 Codelab, updated here for Polymer 2.</p></aside>
+<aside class="special"><p>Note: this content is from Google's original <a href="https://codelabs.developers.google.com/codelabs/polymer-maps/">Build Google Maps Using Web Components &amp; No Code!</a> Polymer 1 Codelab, updated here for Polymer 3.</p></aside>
 
 
 
@@ -46,14 +46,14 @@
 
         <ol type="1" start="1">
           <li><a href="https://git-scm.com/download/">Install Git</a></li>
-          <li><a href="https://nodejs.org/en/download/">Install Node and npm</a> (If you'd like to manage multiple version of Node, we recommend <a href="https://nodejs.org/en/download/" rel="nofollow">nvm</a>)</li>
-          <li>Install <a href="http://bower.io/">Bower</a> &amp; the <a href="https://github.com/Polymer/polymer-cli">Polymer CLI</a> globally:
-            <pre><code>$ npm install -g bower polymer-cli</code></pre>
+          <li><a href="https://nodejs.org/en/download/">Install Node and npm</a> (To alleviate permissions issues and to be able to manage multiple version of Node, we recommend using <a href="https://nodejs.org/en/download/" rel="nofollow">nvm</a> to install Node and npm)</li>
+          <li>Install the <a href="https://www.polymer-project.org/3.0/docs/tools/polymer-cli">Polymer CLI</a> globally:
+            <pre><code>$ npm install -g polymer-cli</code></pre>
           </li>
         </ol>
 
-        <aside class="special"><p><strong>What is Bower?</strong></p>
-          <p><a href="http://bower.io/" target="_blank">Bower</a> is a client-side package management tool that can be used with any web app. When working with Polymer, it simplifies the hassles of dependency management. Every component defines its own set of dependencies. When you use Bower to install a component, the component&#39;s dependencies are installed alongside it under <code>bower_components/</code>.</p>
+        <aside class="special"><p><strong>What is npm?</strong></p>
+          <p><a href="https://www.npmjs.com/" target="_blank">npm</a> is a client-side package management tool bundled with Node.js that can be used with any web app. When working with Polymer, it simplifies the hassles of dependency management. Every component defines its own set of dependencies. When you use npm to install a component, the component&#39;s dependencies are installed alongside it under <code>node_modules/</code>.</p>
           </aside>
 
         <h2><strong>Clone the project &amp; Install dependencies</strong></h2>
@@ -62,25 +62,24 @@
           <li>In your terminal, from the folder you hold your projects in, clone the <a href="https://github.com/ComcastSamples/polymer-maps">Polymer Google Maps Codelab</a>
             <pre><code>$ git clone https://github.com/ComcastSamples/polymer-maps.git</code></pre></li>
           <li>Change into the directory you just cloned <pre><code>$ cd polymer-maps</code></pre></li>
-          <li>Install the dependencies for that project by running <pre><code>$ bower install</code></pre></li>
+          <li>Install the dependencies for that project by running <pre><code>$ npm install</code></pre></li>
         </ol>
 
 
-<p>When you run <code>$ bower install</code>, Bower will download and install a list of dependencies (including the Polymer core library) into the <code>bower_components</code>/ folder. <strong>Fetching the components may take some time if your Internet connection is slow</strong>. </p>
+<p>When you run <code>$ npm install</code>, npm will download and install a list of dependencies (including the Polymer core library) into the <code>node_modules</code>/ folder. <strong>Fetching the components may take some time if your Internet connection is slow</strong>. </p>
 
 <p>Your folder structure should contain these files (among a few others):</p>
 <pre><code>polymer-maps/
-  bower_components/ &lt;!-- installed dependencies from Bower --&gt;
-  bower.json  &lt;!-- Bower metadata files used for managing deps --&gt;
+  node_modules/ &lt;!-- installed dependencies from npm --&gt;
   index.html  &lt;!-- your app --&gt;
-  main.js
+  package.json  &lt;!-- npm metadata file used for managing dependencies --&gt;
   styles.css
 </code></pre>
 <h2><strong>Preview the app</strong></h2>
 <p>Using the Polymer CLI we installed earlier, start up a local dev server with</p>
 <pre><code>$ polymer serve</code></pre>
 <p>Once that command prints out the folllowing, your server is running:</p>
-<pre><code>info:    Files in this directory are available under the following URLs
+<pre><code>info: [cli.command.serve]    Files in this directory are available under the following URLs
       applications: http://127.0.0.1:8081
       reusable components: http://127.0.0.1:8081/components/polymer-maps/
 </code></pre>
@@ -93,29 +92,34 @@
       </google-codelab-step>
 
       <google-codelab-step label="Using google-map" duration="8">
-        <p>The <a href="https://www.webcomponents.org/collection/GoogleWebComponents/google-web-components" target="_blank">Google Web Components</a> collection provides the <code>&lt;google-map&gt;</code> element for declaratively rendering a Google Map. To use it, you first need to install it using Bower.</p>
+        <p>The <a href="https://www.webcomponents.org/collection/GoogleWebComponents/google-web-components" target="_blank">Google Web Components</a> collection provides the <code>&lt;google-map&gt;</code> element for declaratively rendering a Google Map. To use it, you first need to install it using npm.</p>
 
 <h2><strong>Install the google-map element</strong></h2>
 <aside class="special"><p><strong>It's already done!</strong></p>
-<p>In the interest of time (and to respect the unpredictable nature of Conference Wi-Fi), all dependencies you need for this codelab were included in the <code>bower.json</code> when you did a git clone of the project. If you wanted to use these elements in a new project, from the command line you would run<br><code>bower install GoogleWebComponents/google-map --save</code><br>in your app&#39;s directory to install <code>&lt;google-map&gt;</code> and save it as a dependency. </p>
+<p>In the interest of time (and to respect the unpredictable nature of Conference Wi-Fi), all dependencies you need for this codelab were included in the <code>package.json</code> when you did a git clone of the project. If you wanted to use these elements in a new project, from the command line you would run<br><code>npm install @johnriv/google-map --save</code><br>in your app&#39;s directory to install <code>&lt;google-map&gt;</code> and save it as a dependency. </p>
 </aside>
 
-<p>You can verify that <code>&lt;google-map&gt;</code> (and any dependencies) was installed by checking that <code>bower_components/google-map/</code> was created and populated.</p>
+<aside class="warning"><p>Why <strong>@johnriv/google-map</strong> and not <strong>GoogleWebComponents/google-map</strong>?</p>
+<p>With the release of Polymer 3, the Polymer team has been putting <a href="https://www.polymer-project.org/blog/2017-11-27-future-of-elements.html" target="_blank">less of a focus on upgrading their existing set of Open Source Web Components</a>. Google-map is one element that has not been updated yet, so John has updated it himself an published a version scoped under his npm username.</p>
+</aside>
+
+<p>You can verify that <code>&lt;google-map&gt;</code> (and any dependencies) was installed by checking that <code>node_modules/@johnriv/google-map/</code> was created and populated.</p>
 <h2><strong>Obtain a Maps API key</strong></h2>
 <p>To use the map element, you&#39;ll need to obtain an API key for the Google Maps API. Visit <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">https://developers.google.com/maps/documentation/javascript/get-api-key</a> and copy your key. We&#39;ll use it in the next step.</p>
 <h2><strong>Use the google-map element</strong></h2>
 <p>To employ <code>&lt;google-map&gt;</code>, you need to:</p>
 <ol type="1" start="1">
-<li>Use an <a href="http://www.html5rocks.com/en/tutorials/webcomponents/imports/" target="_blank">HTML Import</a> to load it in <code>index.html</code>.</li>
+<li>Use an <a href="https://jakearchibald.com/2017/es-modules-in-browsers/" target="_blank">ES Module Import</a> to load it in <code>index.html</code>.</li>
 <li>Declare an instance of the element on the page.</li>
 </ol>
-<p>In <code>index.html</code>, replace the <code>&lt;!-- HTML Imports go here. Format: &lt;link rel="import" href=""&gt; --&gt;</code> HTML comment in the <strong><code>&lt;head&gt;</code></strong> and replace it with a single import that loads <code>google-map.html</code>:</p>
+
+<p>In <code>index.html</code>, replace the <code>&lt;!-- JavaScript Imports go here. Format: &lt;script type="module" src=""&gt;&lt;/script&gt; --&gt;</code> HTML comment in the <strong><code>&lt;head&gt;</code></strong> and replace it with a single import that loads <code>google-map.js</code>:</p>
 <h3>index.html</h3>
 <pre><code>&lt;head&gt;
   ....
-  &lt;script src=&#34;bower_components/webcomponentsjs/webcomponents-loader.js&#34;&gt;&lt;/script&gt;
+  &lt;script src=&#34;node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js&#34;&gt;&lt;/script&gt;
 
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/google-map/google-map.html&#34;&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@johnriv/google-map/google-map.js&#34;&gt;&lt;/script&gt;
 
   &lt;link rel=&#34;stylesheet&#34; href=&#34;styles.css&#34;&gt;
 &lt;/head&gt;</code></pre>
@@ -152,10 +156,10 @@
 <p><img style="max-width: 624.00px" src="img/bc91a8850a10582c.png"></p>
 
 <aside class="special"><p><strong>Is your map missing?</strong></p>
-  <p>One of the most common mistakes made when first developing with Polymer is adding a Custom Element to your markup and forgetting to include the HTML Import of that Custom Element. If you do that, your Custom Element's definition will not be loaded and will therefore not render as you expect. It can be difficult to realize because it fails without any errors&mdash;an element your browser does not recognize will simply act as if it was a <code>&lt;span&gt;</code> tag.</p>
+  <p>One of the most common mistakes made when first developing with Polymer is adding a Custom Element to your markup and forgetting to include the ES Moudle Import of that Custom Element. If you do that, your Custom Element's definition will not be loaded and will therefore not render as you expect. It can be difficult to realize because it fails without any errors&mdash;an element your browser does not recognize will simply act as if it was a <code>&lt;span&gt;</code> tag.</p>
   <p>Luckily, the Polymer CLI can help. It has a built in linter that will check to make sure all of the Custom Element tags used in your markup are properly imported. If an import is missing, the linter will alert you. To run the linter, run this comand in your terminal:</p>
-  <pre><code>$ polymer lint --rules polymer-2</code></pre>
-  <p>That will check your code against a suite of rules specific to Polymer 2 projects. If you're missing an HTML Import, you'll see a warning similar to this one:</p>
+  <pre><code>$ polymer lint --rules polymer-3</code></pre>
+  <p>That will check your code against a suite of rules specific to Polymer 3 projects. If you're missing a module import, you'll see a warning similar to this one:</p>
   <pre><code>index.html(56,6) warning [undefined-elements] - The element google-map is not defined</code></pre>
   </aside>
 
@@ -174,17 +178,18 @@
 <h2>Use the google-map-directions element</h2>
 <p>To employ <code>&lt;google-map-directions&gt;</code>:</p>
 <ol type="1" start="1">
-<li>Use an HTML Import to load it in <code>index.html</code>.</li>
+<li>Use an ES Module Import to load it in <code>index.html</code>.</li>
 <li>Declare an instance of the element on the page.</li>
 <li>&#34;Connect&#34; it to the map.</li>
 </ol>
-<p>In <code>index.html</code>, add an HTML Import for <code>google-map-directions.html</code>:</p>
+<p>In <code>index.html</code>, add an ES Module Import for <code>google-map-directions.html</code>:</p>
 <h3>index.html</h3>
 <pre><code>&lt;head&gt;
   ....
-  &lt;script src=&#34;bower_components/webcomponentsjs/webcomponents-loader.js&#34;&gt;&lt;/script&gt;
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/google-map/google-map.html&#34;&gt;
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/google-map/google-map-directions.html&#34;&gt;
+  &lt;script src=&#34;node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js&#34;&gt;&lt;/script&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@johnriv/google-map/google-map.js&#34;&gt;&lt;/script&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@johnriv/google-map/google-map-directions.js&#34;&gt;&lt;/script&gt;
+
 &lt;/head&gt;</code></pre>
 <p>Declare <code>&lt;google-map-directions&gt;</code> as a sibling of <code>&lt;google-map&gt;</code>. Set its <code>start-address</code> attribute to &#34;<strong>San Francisco</strong>&#34; and the <code>end-address</code> to &#34;<strong>Mountain View</strong>&#34;.</p>
 <h3>index.html</h3>
@@ -241,16 +246,16 @@
 
       <google-codelab-step label="Add address inputs" duration="12">
         <p>Let&#39;s add input fields to allow users to input the start and end addresses. Polymer provides several elements for working with input: <code>paper-card, paper-item, paper-input</code>, <code>iron-icon</code>, and <code>iron-icons</code>.</p>
-<p>In <strong>index.html</strong>, add new HTML Imports for these components:</p>
+<p>In <strong>index.html</strong>, add new ES Module Imports for these components:</p>
 <h3>index.html</h3>
 <pre><code>&lt;head&gt;
   ....
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/iron-icon/iron-icon.html&#34;&gt;
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/iron-icons/iron-icons.html&#34;&gt;
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/paper-item/paper-item.html&#34;&gt;
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/paper-item/paper-icon-item.html&#34;&gt;
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/paper-input/paper-input.html&#34;&gt;
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/paper-card/paper-card.html&#34;&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@polymer/iron-icon/iron-icon.js&#34;&gt;&lt;/script&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@polymeriron-icons/iron-icons.js&#34;&gt;&lt;/script&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@polymer/paper-item/paper-item.js&#34;&gt;&lt;/script&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@polymer/paper-item/paper-icon-item.js&#34;&gt;&lt;/script&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@polymer/paper-input/paper-input.js&#34;&gt;&lt;/script&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@polymer/paper-card/paper-card.js&#34;&gt;&lt;/script&gt;
 &lt;/head&gt;</code></pre>
 <p>At the bottom of the page, declare two <code>&lt;paper-icon-item&gt;</code> elements and a material design input for the start and end addresses. <code>&lt;paper-icon-item&gt;</code> is a convenience element for making an item with an icon. </p>
 <pre><code>&lt;paper-icon-item&gt;
@@ -260,7 +265,7 @@
   &lt;paper-input label=&#34;End address&#34; value=&#34;Mountain View&#34;&gt;&lt;/paper-input&gt;
 &lt;/paper-icon-item&gt;</code></pre>
 <h3><strong>Add search icons</strong></h3>
-<p><code>&lt;iron-icon&gt;</code> is an element useful for displaying an icon. It takes an <code>icon</code> attribute, which references an icon from Polymer&#39;s default <a href="https://elements.polymer-project.org/elements/iron-icons?view=demo:demo/index.html" target="_blank">icon sets</a>.</p>
+<p><code>&lt;iron-icon&gt;</code> is an element useful for displaying an icon. It takes an <code>icon</code> attribute, which references an icon from Polymer&#39;s default <a href="https://www.webcomponents.org/element/PolymerElements/iron-icons/demo/demo/index.html" target="_blank">icon sets</a>.</p>
 <ol type="1" start="1">
 <li>Inside each item add an <code>&lt;iron-icon&gt;</code> element.</li>
 <li>Set the <code>icon</code> attribute to <code>icon=&#34;search&#34;</code>.</li>
@@ -276,7 +281,7 @@
 <aside class="warning"><p><strong>Important</strong>: Be sure to include the <code>slot="item-icon"</code> attribute on each <code>&lt;iron-icon&gt;</code>. This tells the <code>&lt;paper-icon-item&gt;</code>  which child element it should use as the icon.</p>
 </aside>
 <h3><strong>Add a material design card</strong></h3>
-<p>Wrapping our inputs in a <a href="https://www.google.com/design/spec/components/cards.html" target="_blank">material design</a> <code>&lt;paper-card&gt;</code> is a great way to highlight this part of the app.</p>
+<p>Wrapping our inputs in a <a href="https://material.io/design/components/cards.html" target="_blank">material design</a> <code>&lt;paper-card&gt;</code> is a great way to highlight this part of the app.</p>
 <pre><code>&lt;paper-card elevation=&#34;2&#34;&gt; &lt;!-- elevation controls the amount of box shadow --&gt;
   &lt;paper-icon-item&gt;
     ...
@@ -303,10 +308,10 @@
       <google-codelab-step label="Data binding the user&#39;s search" duration="12">
         <p>In the last step, we created search inputs for the driving directions. In this step of the codelab, we&#39;ll hook them up to power <code>&lt;google-map-directions&gt;</code>.</p>
 <h2><strong>Use data-binding outside of Polymer</strong></h2>
-<p>Polymer&#39;s <a href="https://www.polymer-project.org/2.0/docs/devguide/data-binding" target="_blank">data-binding features</a> are only available when creating a <code>&lt;dom-module&gt;</code> inside a template managed by Polymer.
+<p>Polymer&#39;s <a href="https://www.polymer-project.org/3.0/docs/devguide/data-binding" target="_blank">data-binding features</a> are only available when creating a <code>&lt;dom-module&gt;</code> inside a template managed by Polymer.
 
 To use Polymer bindings for elements placed in the <b>main document</b>, use the <a href="
-https://www.polymer-project.org/2.0/docs/devguide/templates#dom-bind" target="_blank"><code>&lt;dom-bind&gt;</code></a> element.
+https://www.polymer-project.org/3.0/docs/devguide/templates#dom-bind" target="_blank"><code>&lt;dom-bind&gt;</code></a> element.
 
   Essentially, it allows you to use Polymer sugaring features outside of Polymer.  For example, it allows you to use <code>{{}}</code> bindings with elements in your main page.</p>
 <p>Properties defined on  an <code>&lt;dom-bind&gt;</code> can be data bound. For example:</p>
@@ -330,8 +335,8 @@ var gMapDir = document.querySelector('google-map-directions');
 var bindMaps = function() {
   gMapDir.map = gMap.map;
 };</code></pre>
-<p><br>Both the maps and directions elements <a href="https://www.polymer-project.org/2.0/docs/devguide/properties" target="_blank">declare</a> a <code>map</code> property in their <code>properties</code> object. This means you can use an <strong>attribute</strong> of the same name to data-bind the the two <strong>properties</strong> together.</p>
-<aside class="special"><p><strong>Note: </strong>when data binding to an element&#39;s properties, the attribute name is lower case and &#34;-&#34; separated instead of camelCased. See <a href="https://www.polymer-project.org/2.0/docs/devguide/properties#property-name-mapping" target="_blank">attribute to property mappings</a> in the Polymer documentation.</p>
+<p><br>Both the maps and directions elements <a href="https://www.polymer-project.org/3.0/docs/devguide/properties" target="_blank">declare</a> a <code>map</code> property in their <code>properties</code> object. This means you can use an <strong>attribute</strong> of the same name to data-bind the the two <strong>properties</strong> together.</p>
+<aside class="special"><p><strong>Note: </strong>when data binding to an element&#39;s properties, the attribute name is lower case and &#34;-&#34; separated instead of camelCased. See <a href="https://www.polymer-project.org/3.0/docs/devguide/properties#property-name-mapping" target="_blank">attribute to property mappings</a> in the Polymer documentation.</p>
 </aside>
 <ol type="1" start="1">
 <li>In <strong>index.html</strong>, remove the <code>&lt;script&gt;</code> you added in Step 4.</li>
@@ -409,12 +414,12 @@ var bindMaps = function() {
 
       <google-codelab-step label="Changing the form of travel" duration="12">
         <h2><strong>Import the components for this step</strong></h2>
-<p>In <strong>index.html</strong>, add the following HTML Imports to the <code>&lt;head&gt;</code>:</p>
+<p>In <strong>index.html</strong>, add the following ES Module Imports to the <code>&lt;head&gt;</code>:</p>
 <h3>index.html</h3>
 <pre><code>&lt;head&gt;
   ....
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/iron-icons/maps-icons.html&#34;&gt;
-  &lt;link rel=&#34;import&#34; href=&#34;bower_components/paper-tabs/paper-tabs.html&#34;&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@polymer/iron-icons/maps-icons.js&#34;&gt;&lt;/script&gt;
+  &lt;script type=&#34;module&#34; src=&#34;node_modules/@polymer/paper-tabs/paper-tabs.js&#34;&gt;&lt;/script&gt;
 &lt;/head&gt;</code></pre>
 <p><strong>Note: </strong><code>maps-icons</code> is required to load Polymer&#39;s <a href="https://www.webcomponents.org/element/PolymerElements/iron-icons/demo/demo/index.html" target="_blank">map iconset</a>. You&#39;ll use it later to render icons for the travel modes.</p>
 <h2><strong>Creating a travel mode selector</strong></h2>
@@ -455,8 +460,8 @@ var bindMaps = function() {
 &lt;/paper-card&gt;</code></pre>
 <h2>Styling the tab strip</h2>
 <p><code>&lt;paper-tabs&gt;</code> is styled by default. It has a yellow material design ink effect and selection bar indication the selected tab. We can make it nicer!</p>
-<p>Polymer uses <a href="https://www.polymer-project.org/2.0/docs/devguide/custom-css-properties" target="_blank">CSS custom properties</a> to expose styling hooks for internal parts of a component&#39;s Shady DOM. For example,  <a href="https://www.webcomponents.org/element/PolymerElements/paper-tabs/elements/paper-tabs#styling" target="_blank">paper-tabs</a> exposes <code>--paper-tabs-selection-bar-color</code> to colorize the tab&#39;s selection bar.</p>
-<p>CSS custom properties are coming natively to browsers. Until they do, Polymer provides <a href="https://www.polymer-project.org/2.0/docs/devguide/custom-css-properties#create-global-styles" target="_blank"><code>&lt;custom-style&gt;</code></a>, a custom element that wraps the <code>&lt;style&gt;</code> tag and teaches it the custom properties styling system.  To use this element, define it in the <code>&lt;head&gt;</code> of your main page:</p>
+<p>Polymer uses <a href="https://www.polymer-project.org/3.0/docs/devguide/custom-css-properties" target="_blank">CSS custom properties</a> to expose styling hooks for internal parts of a component&#39;s Shady DOM. For example,  <a href="https://www.webcomponents.org/element/PolymerElements/paper-tabs/elements/paper-tabs#styling" target="_blank">paper-tabs</a> exposes <code>--paper-tabs-selection-bar-color</code> to colorize the tab&#39;s selection bar.</p>
+<p>CSS custom properties are coming natively to browsers. Until they do, Polymer provides <a href="https://www.polymer-project.org/3.0/docs/api/elements/custom-style" target="_blank"><code>&lt;custom-style&gt;</code></a>, a custom element that wraps the <code>&lt;style&gt;</code> tag and teaches it the custom properties styling system.  To use this element, define it in the <code>&lt;head&gt;</code> of your main page:</p>
 <h3>index.html</h3>
 <pre><code>&lt;head&gt;
   ...
@@ -483,7 +488,7 @@ var bindMaps = function() {
     &lt;/style&gt;
   &lt;/custom-style&gt;
 &lt;/head&gt;</code></pre>
-<p>This bit of code will colorize the selection bar and ink ripple effect a nice <a href="https://www.google.com/design/spec/style/color.html#color-color-palette" target="_blank">material design blue</a>.</p>
+<p>This bit of code will colorize the selection bar and ink ripple effect a nice <a href="https://material.io/design/color/" target="_blank">material design blue</a>.</p>
 <aside class="special"><p><strong>Note: </strong>you can read up on <a href="https://www.webcomponents.org/element/PolymerElements/paper-tabs/elements/paper-tabs#styling" target="_blank">paper-tabs</a> and <a href="https://www.webcomponents.org/element/PolymerElements/paper-tabs/elements/paper-tab#styling" target="_blank">paper-tab</a> styling hooks in their element documentation pages.</p>
 </aside>
 <p><img style="max-width: 510.00px" src="img/69c6ee0158b29da.png"></p>
