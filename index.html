@@ -105,13 +105,29 @@
 
 <p>You can verify that <code>&lt;google-map&gt;</code> (and any dependencies) was installed by checking that <code>node_modules/@johnriv/google-map/</code> was created and populated.</p>
 <h2><strong>Obtain a Maps API key</strong></h2>
-<p>To use the map element, you&#39;ll need to obtain an API key for the Google Maps API. Visit <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">https://developers.google.com/maps/documentation/javascript/get-api-key</a> and copy your key. We&#39;ll use it in the next step.</p>
+<p>To use the map element, you&#39;ll need to obtain an API key for the Google Maps API. Visit <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">https://developers.google.com/maps/documentation/javascript/get-api-key</a> and copy your key. We&#39;ll use it in the next couple steps.</p>
+<p>Be on the lookout for <code>YOUR_KEY</code> in the code samples. When you encounter it, be sure to replace <code>YOUR_KEY</code> with your actual Maps API key.</p>
 <h2><strong>Use the google-map element</strong></h2>
 <p>To employ <code>&lt;google-map&gt;</code>, you need to:</p>
 <ol type="1" start="1">
 <li>Use an <a href="https://jakearchibald.com/2017/es-modules-in-browsers/" target="_blank">ES Module Import</a> to load it in <code>index.html</code>.</li>
 <li>Declare an instance of the element on the page.</li>
+<li>Style the container of the <code>&lt;google-map&gt;</code> to have a height so the map appears (by default, the component will fill the height of its container)</li>
 </ol>
+
+<p>Since we know you're going to want to reload the page to see the map as soon as you add the <code>&lt;google-map&gt;</code> markup to your page, we'll actually do Step 3, styling the container of the <code>&lt;google-map&gt;</code>, first.</p>
+
+<h3><strong>Style the map</strong></h3>
+<p>In order for the map to properly display itself once we add it, you need to set its container (in this case, <code>&lt;body&gt;</code>) to have a fixed height.</p>
+<p>Open <code>styles.css</code> and replace its contents with this default styling:</p>
+<h3>styles.css</h3>
+<pre><code>body, html {
+  font-family: &#39;Roboto&#39;, Arial, sans-serif;
+  height: 100%;
+  margin: 0;
+}</code></pre>
+
+<h3><strong>Add the google-map element</strong></h3>
 
 <p>In <code>index.html</code>, replace the <code>&lt;!-- JavaScript Imports go here. Format: &lt;script type="module" src=""&gt;&lt;/script&gt; --&gt;</code> HTML comment in the <strong><code>&lt;head&gt;</code></strong> and replace it with a single import that loads <code>google-map.js</code>:</p>
 <h3>index.html</h3>
@@ -128,19 +144,14 @@
 <p>Next, replace the contents of <code>&lt;body&gt;</code> with an instance of <code>&lt;google-map&gt;</code>:</p>
 <h3>index.html</h3>
 <pre><code>&lt;body&gt;
-  &lt;google-map latitude=&#34;37.779&#34; longitude=&#34;-122.3892&#34; zoom=&#34;13&#34;
-      api-key=&#34;YOUR_KEY&#34;&gt;&lt;/google-map&gt;
+  &lt;google-map latitude=&#34;37.779&#34; longitude=&#34;-122.3892&#34;
+    api-key=&#34;YOUR_KEY&#34; zoom=&#34;13&#34; disable-default-ui&gt;&lt;/google-map&gt;
 &lt;/body&gt;</code></pre>
 <p>As you can see, using <code>&lt;google-map&gt;</code> is completely declarative! The map is centered using the <code>latitude</code> and <code>longitude</code> attributes and its zoom level is set by the <code>zoom</code> attribute. We&#39;ve also specified our API key for the Maps API using the <code>api-key</code> attribute.</p>
-<h3><strong>Style the map</strong></h3>
-<p>If you run the app right now, nothing will display. In order for the map to properly display itself, you need to set its container (in this case, <code>&lt;body&gt;</code>) to have a fixed height.</p>
-<p>Open <code>styles.css</code> and replace its contents with default styling:</p>
-<h3>styles.css</h3>
-<pre><code>body, html {
-  font-family: &#39;Roboto&#39;, Arial, sans-serif;
-  height: 100%;
-  margin: 0;
-}</code></pre>
+
+<p>Also note that we&#39;ve disabled the map&#39;s controls by adding the <code>disable-default-ui</code> attribute. Since <a href="https://www.webcomponents.org/element/GoogleWebComponents/google-map/elements/google-map#property-disableDefaultUi"><code>disableDefaultUi</code> is a boolean property</a>, its presence as an HTML attribute makes it truthy. In Polymer, properties are camelCased while their equivalent HTML attributes are kebab-cased.</p>
+
+
 <h3>Add<strong> a marker</strong></h3>
 <p><code>&lt;google-map&gt;</code> supports adding map markers to the map by declaring <code>&lt;google-map-marker&gt;</code> elements as children. The marker locations are also set using <code>latitude</code> and <code>longitude</code> attributes.</p>
 <p>Back in <strong>index.html</strong>, add a draggable <code>&lt;google-map-marker&gt;</code> to the map:</p>
@@ -150,7 +161,6 @@
   &lt;google-map-marker latitude=&#34;37.779&#34; longitude=&#34;-122.3892&#34;
       title=&#34;Go Giants!&#34; draggable=&#34;true&#34;&gt;&lt;/google-map-marker&gt;
 &lt;/google-map&gt;</code></pre>
-<p>Notice that we&#39;ve also disabled the map&#39;s controls by setting <code>disableDefaultUi</code> to true. Since it&#39;s a boolean property, its presence as an HTML attribute makes it truthy.</p>
 <h2><strong>Run the app</strong></h2>
 <p>If you haven&#39;t already done so, navigate to <a href="http://127.0.0.1:8081/">http://127.0.0.1:8081/</a>. At this point, you should see a map that takes up the entire viewport and has a single marker pin.</p>
 <p><img style="max-width: 624.00px" src="img/bc91a8850a10582c.png"></p>
